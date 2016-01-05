@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private String str = "FE2F_CEWF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
