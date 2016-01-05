@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contact_tv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="this is contact item"
+    android:drawableLeft="@drawable/ic_person_add_black_24dp"
+    android:drawablePadding="8dp"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:background="@color/contact_item_bg"
+    >
+
+</TextView>

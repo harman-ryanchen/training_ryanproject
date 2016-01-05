@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WeChat</string>
+    <string name="action_search">search</string>
+    <string name="action_group_chat">group chat</string>
+    <string name="action_addcontacts">Add Contacts</string>
+    <string name="action_scan_qr">Scan QR Code</string>
+    <string name="action_payment">Payment &#038; Receipt</string>
+    <string name="action_help">Help &#038; Feedback</string>
+
+    <string name="tab_chat">Chats</string>
+    <string name="tab_Contacts">Contacts</string>
+    <string name="tab_Discover">Discover</string>
+    <string name="tab_Me">Me</string>
+
+</resources>
