@@ -27,6 +27,7 @@ public class FormatStringfilesUtil {
 	private static String targetPath = "";
 	private static String PATH = "/Users/studio02/Desktop/projectfile/StringTable/";
 	private static final String SPECIAL = "_&SPECIAL&_";
+	
 
 	private static String[] in = new String[] { "en.lproj", "nl.lproj", "fr.lproj", "de.lproj", "sv.lproj", "he.lproj",
 			"es.lproj", "zh-Hans.lproj", "da.lproj", "fi.lproj", "ja.lproj", "pt.lproj", "id.lproj", "it.lproj",
