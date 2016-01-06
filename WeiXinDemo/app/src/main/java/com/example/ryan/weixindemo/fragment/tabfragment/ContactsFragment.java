@@ -18,23 +18,25 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.adapter.ContactsAdapter;
 import com.example.ryan.weixindemo.infoobject.Contact;
-import com.example.ryan.weixindemo.view.SectionIndexAdapter;
+import com.example.ryan.weixindemo.view.IndexScroller;
+import com.example.ryan.weixindemo.view.ScrubberListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by ryan on 12/30/15.
  */
-public class ContactsFragment extends BaseFragmen implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ContactsFragment extends BaseFragmen implements LoaderManager.LoaderCallbacks<Cursor>,IndexScroller.IndexScrollerListener {
     public static final int CONTACT_QUERY_LOADER = 0;
     public static final String TAG = "ContactsFragment";
     public static final String QUERY_KEY = "query";
-    private ListView listView;
-    private SectionIndexAdapter mSectionIndexAdapter;
+    private ScrubberListView listView;
     private List<Contact> contacts = new ArrayList<>();
-
+    private ContactsAdapter contactsAdapter;
     // The column index for the _ID column
     private static final int CONTACT_ID_INDEX = 0;
     // The column index for the LOOKUP_KEY column
@@ -69,9 +71,18 @@ public class ContactsFragment extends BaseFragmen implements LoaderManager.Loade
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listView = (ListView) view.findViewById(R.id.contacts_container);
-        mSectionIndexAdapter = new SectionIndexAdapter(getActivity());
-        listView.setAdapter(mSectionIndexAdapter);
+        listView = (ScrubberListView) view.findViewById(R.id.contacts_container);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        contactsAdapter = new ContactsAdapter(getActivity());
+        contactsAdapter.setInitData(contacts);
+        listView.setAdapter(contactsAdapter);
+        listView.setFastScrollEnabled(true);
+        listView.setIndexScrollerListener(this);
         initDate();
     }
 
@@ -82,7 +93,7 @@ public class ContactsFragment extends BaseFragmen implements LoaderManager.Loade
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        if (id == ContactsQuery.QUERY_ID){
+        if (id == ContactsQuery.QUERY_ID) {
             return new CursorLoader(getActivity(),
                     ContactsQuery.CONTENT_URI,
                     ContactsQuery.PROJECTION,
@@ -90,21 +101,39 @@ public class ContactsFragment extends BaseFragmen implements LoaderManager.Loade
                     null,
                     ContactsQuery.SORT_ORDER);
 
-        }return null;
+        }
+        return null;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.e(TAG, "getColumnCount=" + data.getCount());
+        Log.e(TAG, "onLoadFinished");
         if (loader.getId() == ContactsQuery.QUERY_ID) {
-//            String photoUri = data.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
-
-//            Log.e(TAG, "displayName=" + displayName);
+            contacts.clear();
+            while (data.moveToNext()) {
+                final String photoUri = data.getString(ContactsQuery.PHOTO_THUMBNAIL_DATA);
+                final String displayName = data.getString(ContactsQuery.DISPLAY_NAME);
+                Log.e(TAG, "displayName=" + displayName);
+                Contact contact = new Contact();
+                contact.setName(displayName);
+                contacts.add(contact);
+            }
+            contactsAdapter.setInitData(contacts);
         }
+
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        Log.e(TAG, "onLoaderReset");
+        if (loader.getId() == ContactsQuery.QUERY_ID) {
+            contacts.clear();
+            contactsAdapter.setInitData(contacts);
+        }
+    }
+
+    @Override
+    public void IndexScrollerSelectedListener(boolean allowDrag) {
 
     }
 

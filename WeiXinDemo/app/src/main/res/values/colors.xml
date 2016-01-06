@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="toobar_background">#484848</color>
     <color name="contact_item_bg">#B7B7B7</color>
+
+
+    <color name="glow">#00ABF0</color>
+    <color name="edge">#00ABF0</color>
+    <color name="bg">#E2E2E2</color>
 </resources>

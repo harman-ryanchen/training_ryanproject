@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/contact_tv"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="this is contact item"
-    android:drawableLeft="@drawable/ic_person_add_black_24dp"
-    android:drawablePadding="8dp"
-    android:gravity="center_vertical"
-    android:padding="10dp"
     android:background="@color/contact_item_bg"
-    >
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-</TextView>
+    <ImageView
+        android:id="@+id/contact_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_group_black_24dp" />
+
+
+    <TextView
+        android:id="@+id/contact_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:text="this is contact item"
+        android:textSize="18sp" />
+</LinearLayout>

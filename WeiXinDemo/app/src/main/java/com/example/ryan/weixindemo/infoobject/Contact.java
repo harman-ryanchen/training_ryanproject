@@ -8,6 +8,15 @@ import android.graphics.Bitmap;
 public class Contact {
     private Bitmap bitmap;
     private String name;
+    private boolean isTitle = false;
+
+    public void setTitle(boolean title) {
+        isTitle = title;
+    }
+
+    public boolean isTitle() {
+        return isTitle;
+    }
 
     public Bitmap getBitmap() {
         return bitmap;
