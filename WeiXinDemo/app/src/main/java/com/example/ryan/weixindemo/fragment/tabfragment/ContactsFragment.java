@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.adapter.ContactsAdapter;
