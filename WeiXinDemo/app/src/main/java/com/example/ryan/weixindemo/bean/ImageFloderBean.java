@@ -1,9 +1,11 @@
 package com.example.ryan.weixindemo.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by ryan on 1/7/16.
  */
-public class ImageFloderBean {
+public class ImageFloderBean implements Serializable{
 
     /**
      * 文件夹的第一张图片路径

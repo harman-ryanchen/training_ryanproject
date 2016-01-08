@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -35,27 +36,36 @@ import java.util.Map;
 public class ChatsListFragment extends BaseFragmen {
 
     private HashMap<String, List<String>> mGruopMap = new HashMap<String, List<String>>();
-    private List<ImageFloderBean> floderBeans = new ArrayList<ImageFloderBean>();
-    private GridView floderPics;
+    private GridView mGridView;
     private Context mContext;
+    private List<ImageFloderBean> imageFloderBeens;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.chats_fragment, container, false);
+        View view = inflater.inflate(R.layout.chats_fragment, container, false);
+        this.mContext = getActivity();
+        mGridView = (GridView) view.findViewById(R.id.photoe_wall);
+        getFloderImage();
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                List<String> childList = mGruopMap.get(imageFloderBeens.get(i).getFolderName());
+                ChildPictureFragment.newInstance(childList);
+            }
+        });
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        floderPics = (GridView) view.findViewById(R.id.photoe_wall);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.mContext = getActivity();
-        getFloderImage();
+
     }
 
     private void getFloderImage() {
@@ -103,7 +113,8 @@ public class ChatsListFragment extends BaseFragmen {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                floderPics.setAdapter(new FloderPicAdapter(mContext,subGroupOfImage(mGruopMap)));
+                imageFloderBeens = subGroupOfImage(mGruopMap);
+                mGridView.setAdapter(new FloderPicAdapter(mContext, imageFloderBeens));
             }
         }.execute();
 
@@ -145,7 +156,7 @@ public class ChatsListFragment extends BaseFragmen {
         private List<ImageFloderBean> imageFloderBeans;
         private Point mPoint = new Point(0, 0);//用来封装ImageView的宽和高的对象
 
-        public FloderPicAdapter(Context context,List<ImageFloderBean> imageFloderBeans) {
+        public FloderPicAdapter(Context context, List<ImageFloderBean> imageFloderBeans) {
             this.imageFloderBeans = imageFloderBeans;
             this.mContext = context;
         }
@@ -172,21 +183,24 @@ public class ChatsListFragment extends BaseFragmen {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.imagefloder_item, null);
                 viewHolder.imageCount = (TextView) convertView.findViewById(R.id.group_count);
+                viewHolder.title = (TextView) convertView.findViewById(R.id.group_title);
                 viewHolder.icon = (ImageView) convertView.findViewById(R.id.group_image);
                 mPoint.set(100, 100);//设置图片宽高做图片缩放参考
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
+                viewHolder.icon.setImageResource(R.drawable.friends_sends_pictures_no);
             }
             ImageFloderBean floderBean = imageFloderBeans.get(position);
             String path = floderBean.getTopImagePath();
-            viewHolder.imageCount.setText(floderBean.getImageCounts()+"");
+            viewHolder.imageCount.setText(floderBean.getImageCounts() + "");
+            viewHolder.title.setText(floderBean.getFolderName());
             //给ImageView设置路径Tag,这是异步加载图片的小技巧
             viewHolder.icon.setTag(path);
             LocalImageLoader.getInstance().loadNativeImage(path, mPoint, new LocalImageLoader.NativeImageCallBack() {
                 @Override
                 public void onImageLoader(Bitmap bitmap, String path) {
-                    ImageView mImageView = (ImageView) floderPics.findViewWithTag(path);
+                    ImageView mImageView = (ImageView) mGridView.findViewWithTag(path);
                     if (bitmap != null && mImageView != null) {
                         mImageView.setImageBitmap(bitmap);
                     }
@@ -197,7 +211,7 @@ public class ChatsListFragment extends BaseFragmen {
     }
 
     private static class ViewHolder {
-        private TextView imageCount;
+        private TextView imageCount, title;
         private ImageView icon;
     }
 
