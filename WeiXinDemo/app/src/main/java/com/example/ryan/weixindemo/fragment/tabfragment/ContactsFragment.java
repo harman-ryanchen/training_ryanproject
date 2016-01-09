@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Created by ryan on 12/30/15.
  */
-public class ContactsFragment extends BaseFragmen implements LoaderManager.LoaderCallbacks<Cursor>,IndexScroller.IndexScrollerListener {
+public class ContactsFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>,IndexScroller.IndexScrollerListener {
     public static final int CONTACT_QUERY_LOADER = 0;
     public static final String TAG = "ContactsFragment";
     public static final String QUERY_KEY = "query";

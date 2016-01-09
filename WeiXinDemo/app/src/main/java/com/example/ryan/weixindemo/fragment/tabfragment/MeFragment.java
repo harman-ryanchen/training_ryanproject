@@ -1,6 +1,5 @@
 package com.example.ryan.weixindemo.fragment.tabfragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import com.example.ryan.weixindemo.R;
 /**
  * Created by ryan on 12/30/15.
  */
-public class MeFragment extends BaseFragmen{
+public class MeFragment extends BaseFragment {
 
     @Nullable
     @Override

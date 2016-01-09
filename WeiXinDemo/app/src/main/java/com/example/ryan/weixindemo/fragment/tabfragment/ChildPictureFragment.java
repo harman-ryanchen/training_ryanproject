@@ -8,19 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.adapter.NormalRecyclerViewAdapter;
-import com.example.ryan.weixindemo.bean.ImageFloderBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ryan on 12/30/15.
  */
-public class ChildPictureFragment extends BaseFragmen{
+public class ChildPictureFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private List<String> mBeanList;
 
@@ -52,11 +49,5 @@ public class ChildPictureFragment extends BaseFragmen{
         super.onActivityCreated(savedInstanceState);
     }
 
-    public static ChildPictureFragment newInstance(List<String> beanList) {
-        ChildPictureFragment pictureFragment = new ChildPictureFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ArgumentKeys.CHILD_PIC_FRAGMENT.name(), new ArrayList<>(beanList));
-        return pictureFragment;
-    }
 
 }

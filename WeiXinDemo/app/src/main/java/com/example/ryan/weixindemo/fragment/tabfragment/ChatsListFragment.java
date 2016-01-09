@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.bean.ImageFloderBean;
+import com.example.ryan.weixindemo.common.FragmentsType;
 import com.example.ryan.weixindemo.util.LocalImageLoader;
 
 import java.io.File;
@@ -33,7 +34,7 @@ import java.util.Map;
 /**
  * Created by ryan on 12/30/15.
  */
-public class ChatsListFragment extends BaseFragmen {
+public class ChatsListFragment extends BaseFragment {
 
     private HashMap<String, List<String>> mGruopMap = new HashMap<String, List<String>>();
     private GridView mGridView;
@@ -51,7 +52,10 @@ public class ChatsListFragment extends BaseFragmen {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 List<String> childList = mGruopMap.get(imageFloderBeens.get(i).getFolderName());
-                ChildPictureFragment.newInstance(childList);
+//                ChildPictureFragment.newInstance(childList);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(ChildPictureFragment.ArgumentKeys.CHILD_PIC_FRAGMENT.name(), new ArrayList<String>(childList));
+                getCallback().nextPage(FragmentsType.PICTURE_FRAGMENT, bundle);
             }
         });
         return view;

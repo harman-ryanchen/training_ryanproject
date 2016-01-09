@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 
+import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,9 @@ public class FragmentControler {
      */
     private static final String TABS_TAG_PREFIX = "TABS_";
 
+    private FragmentManager manager;
+    private int containnerID;
+
 
     private static class FragmentEntry {
         private final String mBackstackTag;
@@ -42,6 +47,7 @@ public class FragmentControler {
 
         /**
          * store date for each fragment which was created.
+         *
          * @param manager
          * @param backstackTag
          * @param backstackId
@@ -95,23 +101,29 @@ public class FragmentControler {
         }
     }
 
+    public FragmentControler(FragmentManager manager, int containnerID) {
+        this.manager = manager;
+        this.containnerID = containnerID;
+    }
 
-    public void showMainTabFragment(){
+    public void showMainTabFragment() {
 
     }
 
 
-    public void showMainFragment(){
-
+    public void showMainFragment(BaseFragment currentFragment) {
+        manager.beginTransaction().add(containnerID, currentFragment, currentFragment.getClass().getName()).commit();
     }
-    public void showTabFragment(){
 
-    }
-    public void showChildFragment(){
+    public void showTabFragment() {
 
     }
 
-    private void addFragment(){
+    public void showChildFragment(BaseFragment currentFragment) {
+        manager.beginTransaction().add(containnerID, currentFragment, currentFragment.getClass().getName()).commit();
+    }
+
+    private void addFragment() {
 
     }
 }

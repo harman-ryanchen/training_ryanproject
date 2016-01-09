@@ -8,24 +8,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.common.FragmentsType;
+import com.example.ryan.weixindemo.fragment.FragmentControler;
 import com.example.ryan.weixindemo.fragment.MainFragment;
+import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
+import com.example.ryan.weixindemo.fragment.tabfragment.ChildPictureFragment;
 import com.example.ryan.weixindemo.header.ToolBarControler;
 import com.example.ryan.weixindemo.header.ToolBarInfo;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements BaseFragment.NavigationCallback {
     private ToolBarControler mToolBarControler;
+    private FragmentControler fragmentControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        fragmentControler = new FragmentControler(getSupportFragmentManager(), R.id.sample_content_fragment);
         if (savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            MainFragment fragment = new MainFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
-            transaction.commit();
+            fragmentControler.showMainFragment(createFragment(FragmentsType.MIAN_FRAGMENT));
         }
         initToolBar();
     }
@@ -69,5 +70,27 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private BaseFragment currentFragment;
+
+    @Override
+    public void nextPage(FragmentsType fragmentsType, Bundle bundle) {
+        currentFragment = createFragment(fragmentsType);
+        currentFragment.setArguments(bundle);
+
+        fragmentControler.showChildFragment(currentFragment );
+
+    }
+
+    private BaseFragment createFragment(FragmentsType fragmentsType) {
+        switch (fragmentsType) {
+            case MIAN_FRAGMENT:
+                return new MainFragment();
+            case PICTURE_FRAGMENT:
+                return new ChildPictureFragment();
+            default:
+                return null;
+        }
     }
 }

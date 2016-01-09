@@ -16,7 +16,6 @@
 
 package com.example.ryan.weixindemo.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,7 +28,7 @@ import android.view.ViewGroup;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.AppConfig;
-import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragmen;
+import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ChatsListFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ContactsFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.DiscoverFragment;
@@ -44,7 +43,7 @@ import java.util.List;
  * to display a custom {@link ViewPager} title strip which gives continuous feedback to the user
  * when scrolling.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends BaseFragment {
 
 
     /**
@@ -58,7 +57,7 @@ public class MainFragment extends Fragment {
      */
     private ViewPager mViewPager;
 
-    private List<BaseFragmen> mTabs = new ArrayList<BaseFragmen>();
+    private List<BaseFragment> mTabs = new ArrayList<BaseFragment>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
