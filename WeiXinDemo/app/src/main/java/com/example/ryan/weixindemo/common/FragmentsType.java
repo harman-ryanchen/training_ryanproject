@@ -5,5 +5,6 @@ package com.example.ryan.weixindemo.common;
  */
 public enum FragmentsType {
     MIAN_FRAGMENT,
+    GALLERY_FRAGMENT,
     PICTURE_FRAGMENT;
 }

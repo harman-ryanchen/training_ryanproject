@@ -39,7 +39,8 @@ public class ChildPictureFragment extends BaseFragment {
         mBeanList = (List<String>) getArguments().getSerializable(ArgumentKeys.CHILD_PIC_FRAGMENT.name());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));//这里用线性宫格显示 类似于grid view
 
-        mRecyclerView.setAdapter(new NormalRecyclerViewAdapter(getActivity(),mBeanList));
+        NormalRecyclerViewAdapter adapter = new NormalRecyclerViewAdapter(getActivity(), mBeanList,getCallback());
+        mRecyclerView.setAdapter(adapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         return view;
     }

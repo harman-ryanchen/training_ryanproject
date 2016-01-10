@@ -1,13 +1,15 @@
 package com.example.ryan.weixindemo.fragment;
 
-import android.app.Fragment;
 import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,6 +32,7 @@ public class FragmentControler {
 
     private FragmentManager manager;
     private int containnerID;
+    private List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
 
     private static class FragmentEntry {
@@ -43,7 +46,6 @@ public class FragmentControler {
         int mContainerId;
         private final boolean mCallBackpressOnClear;
 
-        private List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
         /**
          * store date for each fragment which was created.
@@ -111,19 +113,56 @@ public class FragmentControler {
     }
 
 
-    public void showMainFragment(BaseFragment currentFragment) {
-        manager.beginTransaction().add(containnerID, currentFragment, currentFragment.getClass().getName()).commit();
+    public String showMainFragment(BaseFragment currentFragment) {
+        String backstackTag = MAIN_TAG;
+
+        FragmentTransaction transaction = manager.beginTransaction();
+        int backStackId = transaction.add(containnerID, currentFragment, currentFragment.getClass().getName()).commitAllowingStateLoss();
+        hideAllFragment(transaction, containnerID);
+        addFragment(manager, backstackTag, backStackId, currentFragment, containnerID);
+        return MAIN_TAG;
     }
 
     public void showTabFragment() {
 
     }
 
-    public void showChildFragment(BaseFragment currentFragment) {
-        manager.beginTransaction().add(containnerID, currentFragment, currentFragment.getClass().getName()).commit();
+    public String showChildFragment(BaseFragment currentFragment) {
+        String backstackTag = CHILD_TAG_PREFIX + currentFragment.getClass().getName();
+
+        FragmentTransaction transaction = manager.beginTransaction();
+        int backStackId = transaction.add(containnerID, currentFragment, currentFragment.getClass().getName()).addToBackStack(backstackTag).commitAllowingStateLoss();
+        hideAllFragment(transaction, containnerID);
+        addFragment(manager, backstackTag, backStackId, currentFragment, containnerID);
+        return CHILD_TAG_PREFIX;
     }
 
-    private void addFragment() {
+    /**
+     * @param manager
+     * @param tag
+     * @param stackid
+     * @param containner
+     */
+    private void addFragment(FragmentManager manager, String tag, int stackid, BaseFragment fragment, int containner) {
+        FragmentEntry entry = new FragmentEntry(manager, tag, stackid, fragment, 0, containner, true);
+        fragmentEntries.add(entry);
+    }
 
+    private void hideAllFragment(FragmentTransaction t, int containerId) {
+        for (Iterator<FragmentEntry> it = fragmentEntries.iterator(); it.hasNext(); ) {
+            FragmentEntry entry = it.next();
+            Fragment f = entry.getFragment();
+            if (!isFragmentValid(f)) {
+                it.remove();
+                continue;
+            }
+            if (entry.getContainerId() == containerId && f.isVisible()) {
+                t.hide(f);
+            }
+        }
+    }
+
+    private boolean isFragmentValid(Fragment f) {
+        return f != null && !f.isDetached();
     }
 }

@@ -3,18 +3,22 @@ package com.example.ryan.weixindemo.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.ryan.weixindemo.R;
-import com.example.ryan.weixindemo.bean.ImageFloderBean;
+import com.example.ryan.weixindemo.common.FragmentsType;
+import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
+import com.example.ryan.weixindemo.fragment.tabfragment.ChildPictureFragment;
+import com.example.ryan.weixindemo.util.DebugLog;
 import com.example.ryan.weixindemo.util.LocalImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,12 +38,14 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
     private final Context mContext;
     private List<String> mBeanList;
     private Point mPoint = new Point(0, 0);//用来封装ImageView的宽和高的对象
+    private BaseFragment.NavigationCallback callback;
 
-    public NormalRecyclerViewAdapter(Context context,List<String> beanlist) {
+    public NormalRecyclerViewAdapter(Context context,List<String> beanlist,BaseFragment.NavigationCallback callback) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         this.mBeanList = beanlist;
         mPoint.set(100,100);
+        this.callback = callback;
     }
 
     @Override
@@ -63,13 +69,23 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
         return mBeanList.size();
     }
 
-    public static class NormalTextViewHolder extends RecyclerView.ViewHolder {
+
+
+    public class NormalTextViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView picture;
 
         NormalTextViewHolder(View view) {
             super(view);
             picture = (ImageView) view.findViewById(R.id.child_image);
+          view.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View v) {
+            DebugLog.d("onClick-=" + getPosition());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(ChildPictureFragment.ArgumentKeys.CHILD_PIC_FRAGMENT.name(),new ArrayList<>(mBeanList));
+            callback.nextPage(FragmentsType.GALLERY_FRAGMENT,bundle);
+        }
     }
 }
