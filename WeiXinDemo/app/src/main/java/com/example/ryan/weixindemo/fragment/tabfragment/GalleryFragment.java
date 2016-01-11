@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
