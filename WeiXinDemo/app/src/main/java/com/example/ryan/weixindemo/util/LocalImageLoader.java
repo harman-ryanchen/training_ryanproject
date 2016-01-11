@@ -61,7 +61,7 @@ public class LocalImageLoader {
      * @return
      */
     public Bitmap loadNativeImage(final String path, final NativeImageCallBack mCallBack) {
-        return this.loadNativeImage(path, null, mCallBack);
+        return this.loadNativeImage(path, null, "",mCallBack);
     }
 
     /**
@@ -70,12 +70,15 @@ public class LocalImageLoader {
      *
      * @param path
      * @param mPoint
+     * @param imagetag
      * @param mCallBack
      * @return
      */
-    public Bitmap loadNativeImage(final String path, final Point mPoint, final NativeImageCallBack mCallBack) {
+    public Bitmap loadNativeImage(final String path, final Point mPoint,String imagetag ,final NativeImageCallBack mCallBack) {
         //先获取内存中的Bitmap
-        Bitmap bitmap = getBitmapFromMemCache(path);
+        final String keyTag = path + imagetag;
+//        Bitmap bitmap = getBitmapFromMemCache(path);
+        Bitmap bitmap = getBitmapFromMemCache(keyTag);
 
         final Handler mHander = new Handler() {
 
@@ -100,7 +103,7 @@ public class LocalImageLoader {
                     mHander.sendMessage(msg);
 
                     //将图片加入到内存缓存
-                    addBitmapToMemoryCache(path, mBitmap);
+                    addBitmapToMemoryCache(keyTag, mBitmap);
                 }
             });
         }

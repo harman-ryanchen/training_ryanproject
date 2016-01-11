@@ -13,6 +13,7 @@ import com.example.ryan.weixindemo.fragment.FragmentControler;
 import com.example.ryan.weixindemo.fragment.MainFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ChildPictureFragment;
+import com.example.ryan.weixindemo.fragment.tabfragment.GalleryFragment;
 import com.example.ryan.weixindemo.header.ToolBarControler;
 import com.example.ryan.weixindemo.header.ToolBarInfo;
 
@@ -89,6 +90,8 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
                 return new MainFragment();
             case PICTURE_FRAGMENT:
                 return new ChildPictureFragment();
+            case GALLERY_FRAGMENT:
+                return new GalleryFragment();
             default:
                 return null;
         }

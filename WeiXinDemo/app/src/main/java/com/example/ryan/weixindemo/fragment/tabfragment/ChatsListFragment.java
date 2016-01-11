@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.bean.ImageFloderBean;
+import com.example.ryan.weixindemo.common.AppConfig;
+import com.example.ryan.weixindemo.common.ArgumentKeys;
 import com.example.ryan.weixindemo.common.FragmentsType;
 import com.example.ryan.weixindemo.util.LocalImageLoader;
 
@@ -54,7 +56,7 @@ public class ChatsListFragment extends BaseFragment {
                 List<String> childList = mGruopMap.get(imageFloderBeens.get(i).getFolderName());
 //                ChildPictureFragment.newInstance(childList);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(ChildPictureFragment.ArgumentKeys.CHILD_PIC_FRAGMENT.name(), new ArrayList<String>(childList));
+                bundle.putSerializable(ArgumentKeys.IMAGE_URILS.name(), new ArrayList<String>(childList));
                 getCallback().nextPage(FragmentsType.PICTURE_FRAGMENT, bundle);
             }
         });
@@ -201,7 +203,7 @@ public class ChatsListFragment extends BaseFragment {
             viewHolder.title.setText(floderBean.getFolderName());
             //给ImageView设置路径Tag,这是异步加载图片的小技巧
             viewHolder.icon.setTag(path);
-            LocalImageLoader.getInstance().loadNativeImage(path, mPoint, new LocalImageLoader.NativeImageCallBack() {
+            LocalImageLoader.getInstance().loadNativeImage(path, mPoint, AppConfig.SMALL_IMAGE_TAG, new LocalImageLoader.NativeImageCallBack() {
                 @Override
                 public void onImageLoader(Bitmap bitmap, String path) {
                     ImageView mImageView = (ImageView) mGridView.findViewWithTag(path);

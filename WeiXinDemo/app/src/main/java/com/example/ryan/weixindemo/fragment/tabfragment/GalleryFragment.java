@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.common.ArgumentKeys;
 
 import java.util.List;
 
@@ -26,8 +27,10 @@ public class GalleryFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.gallery_fragment, container, false);
         viewPager = (ViewPager) view.findViewById(R.id.gallery_container);
-        picPaths = (List<String>) getArguments().getSerializable(ChildPictureFragment.ArgumentKeys.CHILD_PIC_FRAGMENT.name());
+        picPaths = (List<String>) getArguments().getSerializable(ArgumentKeys.IMAGE_URILS.name());
+        int position = getArguments().getInt(ArgumentKeys.CURRENT_IMAGE.name());
         viewPager.setAdapter(new PictureGalleryAdapter(getActivity().getSupportFragmentManager()));
+        viewPager.setCurrentItem(position);
         return view;
     }
 

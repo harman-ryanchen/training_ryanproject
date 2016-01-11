@@ -16,8 +16,11 @@
 
 package com.example.ryan.weixindemo.fragment.tabfragment;
 
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.common.AppConfig;
+import com.example.ryan.weixindemo.util.LocalImageLoader;
 
 
 /**
@@ -35,6 +40,7 @@ public class ImageDetailFragment extends Fragment {
     private String mImageUrl;
     private ImageView mImageView;
 //    private ImageFetcher mImageFetcher;
+    private Point point = new Point();
 
     /**
      * Factory method to generate a new instance of the fragment given an image number.
@@ -65,6 +71,19 @@ public class ImageDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mImageUrl = getArguments() != null ? getArguments().getString(IMAGE_DATA_EXTRA) : null;
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int height = displayMetrics.heightPixels;
+        final int width = displayMetrics.widthPixels;
+
+        // For this sample we'll use half of the longest width to resize our images. As the
+        // image scaling ensures the image is larger than this, we should be left with a
+        // resolution that is appropriate for both portrait and landscape. For best image quality
+        // we shouldn't divide by 2, but this will use more memory and require a larger memory
+        // cache.
+        final int longest = (height > width ? height : width) / 2;
+
+        point.set(longest,longest);
     }
 
     @Override
@@ -82,11 +101,21 @@ public class ImageDetailFragment extends Fragment {
 
         // Use the parent activity to load the image asynchronously into the ImageView (so a single
         // cache can be used over all pages in the ViewPager
+      Bitmap bitmap = LocalImageLoader.getInstance().loadNativeImage(mImageUrl, point, AppConfig.LARGE_IMAGE_TAG,new LocalImageLoader.NativeImageCallBack() {
+            @Override
+            public void onImageLoader(Bitmap bitmap, String path) {
+                    mImageView.setImageBitmap(bitmap);
+            }
+        });
+
+        if (bitmap!=null){
+            mImageView.setImageBitmap(bitmap);
+        }
 
         // Pass clicks on the ImageView to the parent activity to handle
-        if (OnClickListener.class.isInstance(getActivity()) && Utils.hasHoneycomb()) {
-            mImageView.setOnClickListener((OnClickListener) getActivity());
-        }
+//        if (OnClickListener.class.isInstance(getActivity()) && Utils.hasHoneycomb()) {
+//            mImageView.setOnClickListener((OnClickListener) getActivity());
+//        }
     }
 
     @Override
