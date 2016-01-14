@@ -23,6 +23,7 @@ import com.example.ryan.weixindemo.bean.ImageFloderBean;
 import com.example.ryan.weixindemo.common.AppConfig;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
 import com.example.ryan.weixindemo.common.FragmentsType;
+import com.example.ryan.weixindemo.util.DebugLog;
 import com.example.ryan.weixindemo.util.util.ImageFetcher;
 
 import java.io.File;
@@ -45,6 +46,7 @@ public class ChatsListFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        DebugLog.d("");
         View view = inflater.inflate(R.layout.chats_fragment, container, false);
         this.mContext = getActivity();
         mGridView = (GridView) view.findViewById(R.id.photoe_wall);
@@ -74,7 +76,8 @@ public class ChatsListFragment extends BaseFragment {
     }
 
     private void getFloderImage() {
-
+        DebugLog.d("");
+        mGruopMap.clear();
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {

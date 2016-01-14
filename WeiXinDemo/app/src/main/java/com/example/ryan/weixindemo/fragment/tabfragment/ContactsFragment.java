@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.adapter.ContactsAdapter;
 import com.example.ryan.weixindemo.infoobject.Contact;
+import com.example.ryan.weixindemo.util.DebugLog;
+import com.example.ryan.weixindemo.util.LogUtil;
 import com.example.ryan.weixindemo.view.IndexScroller;
 import com.example.ryan.weixindemo.view.ScrubberListView;
 
@@ -32,14 +34,9 @@ import java.util.List;
 public class ContactsFragment extends BaseFragment implements LoaderManager.LoaderCallbacks<Cursor>,IndexScroller.IndexScrollerListener {
     public static final int CONTACT_QUERY_LOADER = 0;
     public static final String TAG = "ContactsFragment";
-    public static final String QUERY_KEY = "query";
     private ScrubberListView listView;
     private List<Contact> contacts = new ArrayList<>();
     private ContactsAdapter contactsAdapter;
-    // The column index for the _ID column
-    private static final int CONTACT_ID_INDEX = 0;
-    // The column index for the LOOKUP_KEY column
-    private static final int LOOKUP_KEY_INDEX = 1;
 
     @SuppressLint("InlinedApi")
     private static final String SELECTION =
@@ -64,25 +61,23 @@ public class ContactsFragment extends BaseFragment implements LoaderManager.Load
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.contacts_fragment, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        listView = (ScrubberListView) view.findViewById(R.id.contacts_container);
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        LogUtil.l();
+        View view = inflater.inflate(R.layout.contacts_fragment, container, false);
         contactsAdapter = new ContactsAdapter(getActivity());
         contactsAdapter.setInitData(contacts);
+        listView = (ScrubberListView) view.findViewById(R.id.contacts_container);
         listView.setAdapter(contactsAdapter);
         listView.setFastScrollEnabled(true);
         listView.setIndexScrollerListener(this);
         initDate();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        LogUtil.l();
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     private void initDate() {
@@ -92,6 +87,7 @@ public class ContactsFragment extends BaseFragment implements LoaderManager.Load
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        LogUtil.l();
         if (id == ContactsQuery.QUERY_ID) {
             return new CursorLoader(getActivity(),
                     ContactsQuery.CONTENT_URI,
@@ -106,7 +102,7 @@ public class ContactsFragment extends BaseFragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.e(TAG, "onLoadFinished");
+        LogUtil.l();
         if (loader.getId() == ContactsQuery.QUERY_ID) {
             contacts.clear();
             while (data.moveToNext()) {
@@ -124,7 +120,7 @@ public class ContactsFragment extends BaseFragment implements LoaderManager.Load
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Log.e(TAG, "onLoaderReset");
+        LogUtil.l();
         if (loader.getId() == ContactsQuery.QUERY_ID) {
             contacts.clear();
             contactsAdapter.setInitData(contacts);

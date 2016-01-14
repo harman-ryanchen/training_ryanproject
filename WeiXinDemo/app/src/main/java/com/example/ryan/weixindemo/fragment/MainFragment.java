@@ -33,6 +33,7 @@ import com.example.ryan.weixindemo.fragment.tabfragment.ChatsListFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ContactsFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.DiscoverFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.MeFragment;
+import com.example.ryan.weixindemo.util.LogUtil;
 import com.example.ryan.weixindemo.view.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -69,11 +70,11 @@ public class MainFragment extends BaseFragment {
          * color, which are used by {@link SlidingTabLayout}.
          */
         initMainTabFragment();
-
+        LogUtil.l();
     }
 
     private void initMainTabFragment() {
-
+        LogUtil.l();
         ChatsListFragment chatsListFragment = new ChatsListFragment();
 
         ContactsFragment contactsFragment = new ContactsFragment();

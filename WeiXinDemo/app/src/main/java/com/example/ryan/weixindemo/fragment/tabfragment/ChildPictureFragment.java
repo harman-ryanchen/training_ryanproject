@@ -15,6 +15,7 @@ import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.AppConfig;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
 import com.example.ryan.weixindemo.common.FragmentsType;
+import com.example.ryan.weixindemo.util.DebugLog;
 import com.example.ryan.weixindemo.util.util.ImageFetcher;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class ChildPictureFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        DebugLog.d("");
         View view = inflater.inflate(R.layout.child_picture_fragment, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.child_pic_container);
         mBeanList = (List<String>) getArguments().getSerializable(ArgumentKeys.IMAGE_URILS.name());
