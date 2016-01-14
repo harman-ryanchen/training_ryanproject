@@ -16,20 +16,19 @@
 
 package com.example.ryan.weixindemo.fragment.tabfragment;
 
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.AppConfig;
-import com.example.ryan.weixindemo.util.LocalImageLoader;
+import com.example.ryan.weixindemo.util.util.ImageFetcher;
+import com.example.ryan.weixindemo.util.util.ImageWorker;
 
 
 /**
@@ -39,7 +38,7 @@ public class ImageDetailFragment extends Fragment {
     private static final String IMAGE_DATA_EXTRA = "extra_image_data";
     private String mImageUrl;
     private ImageView mImageView;
-//    private ImageFetcher mImageFetcher;
+        private ImageFetcher mImageFetcher;
     private Point point = new Point();
 
     /**
@@ -61,7 +60,8 @@ public class ImageDetailFragment extends Fragment {
     /**
      * Empty constructor as per the Fragment documentation
      */
-    public ImageDetailFragment() {}
+    public ImageDetailFragment() {
+    }
 
     /**
      * Populate image using a url from extras, use the convenience factory method
@@ -71,6 +71,9 @@ public class ImageDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mImageUrl = getArguments() != null ? getArguments().getString(IMAGE_DATA_EXTRA) : null;
+
+        // Fetch screen height and width, to use as our max size when loading images as this
+        // activity runs full screen
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int height = displayMetrics.heightPixels;
@@ -83,12 +86,15 @@ public class ImageDetailFragment extends Fragment {
         // cache.
         final int longest = (height > width ? height : width) / 2;
 
-        point.set(longest,longest);
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(getActivity(), longest);
+        mImageFetcher.setImageFadeIn(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate and locate the main ImageView
         final View v = inflater.inflate(R.layout.image_detail_fragment, container, false);
         mImageView = (ImageView) v.findViewById(R.id.imageView);
@@ -101,21 +107,7 @@ public class ImageDetailFragment extends Fragment {
 
         // Use the parent activity to load the image asynchronously into the ImageView (so a single
         // cache can be used over all pages in the ViewPager
-      Bitmap bitmap = LocalImageLoader.getInstance().loadNativeImage(mImageUrl, point, AppConfig.LARGE_IMAGE_TAG,new LocalImageLoader.NativeImageCallBack() {
-            @Override
-            public void onImageLoader(Bitmap bitmap, String path) {
-                    mImageView.setImageBitmap(bitmap);
-            }
-        });
-
-        if (bitmap!=null){
-            mImageView.setImageBitmap(bitmap);
-        }
-
-        // Pass clicks on the ImageView to the parent activity to handle
-//        if (OnClickListener.class.isInstance(getActivity()) && Utils.hasHoneycomb()) {
-//            mImageView.setOnClickListener((OnClickListener) getActivity());
-//        }
+        mImageFetcher.loadImage(mImageUrl,mImageView,AppConfig.LARGE_IMAGE_TAG);
     }
 
     @Override
@@ -123,7 +115,7 @@ public class ImageDetailFragment extends Fragment {
         super.onDestroy();
         if (mImageView != null) {
             // Cancel any pending image work
-//            ImageWorker.cancelWork(mImageView);
+            ImageWorker.cancelWork(mImageView);
             mImageView.setImageDrawable(null);
         }
     }

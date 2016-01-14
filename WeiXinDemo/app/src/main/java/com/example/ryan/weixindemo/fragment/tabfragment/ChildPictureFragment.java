@@ -1,8 +1,6 @@
 package com.example.ryan.weixindemo.fragment.tabfragment;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,7 +15,7 @@ import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.AppConfig;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
 import com.example.ryan.weixindemo.common.FragmentsType;
-import com.example.ryan.weixindemo.util.LocalImageLoader;
+import com.example.ryan.weixindemo.util.util.ImageFetcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,7 @@ import java.util.List;
 public class ChildPictureFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private List<String> mBeanList;
+    private ImageFetcher mImageFetcher;
 
 
     @Override
@@ -46,6 +45,11 @@ public class ChildPictureFragment extends BaseFragment {
         NormalRecyclerViewAdapter adapter = new NormalRecyclerViewAdapter(getActivity(), mBeanList);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(getActivity(), 100);
         return view;
     }
 
@@ -58,13 +62,11 @@ public class ChildPictureFragment extends BaseFragment {
         private final LayoutInflater mLayoutInflater;
         private final Context mContext;
         private List<String> mBeanList;
-        private Point mPoint = new Point(0, 0);//用来封装ImageView的宽和高的对象
 
         public NormalRecyclerViewAdapter(Context context, List<String> beanlist) {
             mContext = context;
             mLayoutInflater = LayoutInflater.from(context);
             this.mBeanList = beanlist;
-            mPoint.set(100, 100);
         }
 
         @Override
@@ -74,15 +76,8 @@ public class ChildPictureFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(final NormalTextViewHolder holder, int position) {
-            Bitmap bitmap = LocalImageLoader.getInstance().loadNativeImage(mBeanList.get(position), mPoint, AppConfig.SMALL_IMAGE_TAG, new LocalImageLoader.NativeImageCallBack() {
-                @Override
-                public void onImageLoader(Bitmap bitmap, String path) {
-                    holder.picture.setImageBitmap(bitmap);
-                }
-            });
-            if (bitmap!=null){
-                holder.picture.setImageBitmap(bitmap);
-            }
+//          LocalImageLoader.getInstance().loadNativeImage(mBeanList.get(position), mPoint, AppConfig.SMALL_IMAGE_TAG, holder.picture);
+            mImageFetcher.loadImage(mBeanList.get(position),holder.picture,AppConfig.SMALL_IMAGE_TAG);
         }
 
         @Override
@@ -106,10 +101,11 @@ public class ChildPictureFragment extends BaseFragment {
             }
         }
     }
+
     private void gotoNextPage(int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(ArgumentKeys.IMAGE_URILS.name(), new ArrayList<>(mBeanList));
-        bundle.putInt(ArgumentKeys.CURRENT_IMAGE.name(),position);
-        getCallback().nextPage(FragmentsType.GALLERY_FRAGMENT,bundle);
-}
+        bundle.putInt(ArgumentKeys.CURRENT_IMAGE.name(), position);
+        getCallback().nextPage(FragmentsType.GALLERY_FRAGMENT, bundle);
+    }
 }

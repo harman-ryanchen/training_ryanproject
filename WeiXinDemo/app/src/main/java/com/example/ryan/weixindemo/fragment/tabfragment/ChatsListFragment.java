@@ -3,7 +3,6 @@ package com.example.ryan.weixindemo.fragment.tabfragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,7 +23,7 @@ import com.example.ryan.weixindemo.bean.ImageFloderBean;
 import com.example.ryan.weixindemo.common.AppConfig;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
 import com.example.ryan.weixindemo.common.FragmentsType;
-import com.example.ryan.weixindemo.util.LocalImageLoader;
+import com.example.ryan.weixindemo.util.util.ImageFetcher;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -203,15 +202,11 @@ public class ChatsListFragment extends BaseFragment {
             viewHolder.title.setText(floderBean.getFolderName());
             //给ImageView设置路径Tag,这是异步加载图片的小技巧
             viewHolder.icon.setTag(path);
-            LocalImageLoader.getInstance().loadNativeImage(path, mPoint, AppConfig.SMALL_IMAGE_TAG, new LocalImageLoader.NativeImageCallBack() {
-                @Override
-                public void onImageLoader(Bitmap bitmap, String path) {
-                    ImageView mImageView = (ImageView) mGridView.findViewWithTag(path);
-                    if (bitmap != null && mImageView != null) {
-                        mImageView.setImageBitmap(bitmap);
-                    }
-                }
-            });
+
+//            LocalImageLoader.getInstance().loadNativeImage(path, mPoint, AppConfig.SMALL_IMAGE_TAG, viewHolder.icon);
+            // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+            ImageFetcher mImageFetcher = new ImageFetcher(getActivity(), 100);
+            mImageFetcher.loadImage(path,viewHolder.icon, AppConfig.SMALL_IMAGE_TAG);
             return convertView;
         }
     }
