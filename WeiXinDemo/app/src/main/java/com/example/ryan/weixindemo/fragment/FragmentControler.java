@@ -117,7 +117,7 @@ public class FragmentControler {
         String backstackTag = MAIN_TAG;
 
         FragmentTransaction transaction = manager.beginTransaction();
-        int backStackId = transaction.add(containnerID, currentFragment, currentFragment.getClass().getName()).commitAllowingStateLoss();
+        int backStackId = transaction.add(containnerID, currentFragment, currentFragment.getClass().getName()).addToBackStack(backstackTag).commitAllowingStateLoss();
         hideAllFragment(transaction, containnerID);
         addFragment(manager, backstackTag, backStackId, currentFragment, containnerID);
         return MAIN_TAG;
@@ -134,7 +134,7 @@ public class FragmentControler {
         int backStackId = transaction.add(containnerID, currentFragment, currentFragment.getClass().getName()).addToBackStack(backstackTag).commitAllowingStateLoss();
         hideAllFragment(transaction, containnerID);
         addFragment(manager, backstackTag, backStackId, currentFragment, containnerID);
-        return CHILD_TAG_PREFIX;
+        return backstackTag;
     }
 
     /**

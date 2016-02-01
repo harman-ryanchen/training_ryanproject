@@ -33,6 +33,7 @@ import com.example.ryan.weixindemo.fragment.tabfragment.ChatsListFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ContactsFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.DiscoverFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.MeFragment;
+import com.example.ryan.weixindemo.header.ToolBarInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
 import com.example.ryan.weixindemo.view.SlidingTabLayout;
 
@@ -44,7 +45,7 @@ import java.util.List;
  * to display a custom {@link ViewPager} title strip which gives continuous feedback to the user
  * when scrolling.
  */
-public class MainFragment extends BaseFragment {
+public class MainFragment extends ExtraBaseFragment {
 
 
     /**
@@ -96,9 +97,27 @@ public class MainFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        LogUtil.l();
+        super.onCreateView(inflater,container,savedInstanceState);
         return inflater.inflate(R.layout.slide_fragment, container, false);
     }
 
+    @Override
+    public void initToolBar() {
+        LogUtil.l();
+        LogUtil.d("test_tool_bar");
+        getCallback().setToolBar(new ToolBarInfo.Builder().setToolBarContentText(getString(R.string.app_name)).setOptionMenu(R.menu.menu_main).setToolBarContentLogo(0).build());
+    }
+
+    @Override
+    public void onShow() {
+        LogUtil.l();
+    }
+
+    @Override
+    public void onHide() {
+        LogUtil.l();
+    }
     // BEGIN_INCLUDE (fragment_onviewcreated)
 
     /**
@@ -126,6 +145,7 @@ public class MainFragment extends BaseFragment {
         mSlidingTabLayout.setCustomTabView(R.layout.custom_tabview, 0);
         mSlidingTabLayout.setViewPager(mViewPager, AppConfig.TAB_ICONS);
 
+
         // BEGIN_INCLUDE (tab_colorizer)
         // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
         // the tab at the position, and return it's set color
@@ -146,6 +166,36 @@ public class MainFragment extends BaseFragment {
 
         // END_INCLUDE (tab_colorizer)
         // END_INCLUDE (setup_slidingtablayout)
+    }
+
+    @Override
+    public void onResume() {
+        LogUtil.l();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        LogUtil.l();
+        super.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        LogUtil.l();
+        super.onStart();
+    }
+
+    @Override
+    public void onDetach() {
+        LogUtil.l();
+        super.onDetach();
+    }
+
+    @Override
+    public void onDestroy() {
+        LogUtil.l();
+        super.onDestroy();
     }
 
     class SampleFragmentPagerAdapter extends FragmentPagerAdapter {

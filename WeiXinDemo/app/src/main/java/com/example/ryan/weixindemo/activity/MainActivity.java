@@ -1,11 +1,9 @@
 package com.example.ryan.weixindemo.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.FragmentsType;
@@ -16,72 +14,65 @@ import com.example.ryan.weixindemo.fragment.tabfragment.ChildPictureFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.GalleryFragment;
 import com.example.ryan.weixindemo.header.ToolBarControler;
 import com.example.ryan.weixindemo.header.ToolBarInfo;
+import com.example.ryan.weixindemo.util.LogUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements BaseFragment.NavigationCallback {
     private ToolBarControler mToolBarControler;
     private FragmentControler fragmentControler;
+    private Map<FragmentsType, String> backstackIds = new HashMap();
+    private FragmentsType currentFragmentsType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LogUtil.l();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolBar();
         fragmentControler = new FragmentControler(getSupportFragmentManager(), R.id.sample_content_fragment);
         if (savedInstanceState == null) {
-            fragmentControler.showMainFragment(createFragment(FragmentsType.MIAN_FRAGMENT));
+            String backsrackTag = fragmentControler.showMainFragment(createFragment(FragmentsType.MIAN_FRAGMENT));
+            currentFragmentsType = FragmentsType.MIAN_FRAGMENT;
+            backstackIds.put(FragmentsType.MIAN_FRAGMENT, backsrackTag);
         }
-        initToolBar();
     }
 
     private void initToolBar() {
+        LogUtil.d("test_tool_bar");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolBarControler = new ToolBarControler(this, toolbar);
-        mToolBarControler.setToolbarInfo(new ToolBarInfo.Builder().setToolBarContentText(getString(R.string.app_name)).build());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        return mToolBarControler.onCreateOptionsMenu(R.menu.menu_main, menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_group_chat) {
-            Log.d("Action", "click =" + item.getTitle());
-            return true;
-        } else if (id == R.id.action_search) {
-            Log.d("Action", "click =" + item.getTitle());
-            return true;
-        } else if (id == R.id.action_scan_qr) {
-            Log.d("Action", "click =" + item.getTitle());
-            return true;
-        } else if (id == R.id.action_help) {
-            Log.d("Action", "click =" + item.getTitle());
-            return true;
-        } else if (id == R.id.action_payment) {
-            Log.d("Action", "click =" + item.getTitle());
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private BaseFragment currentFragment;
 
     @Override
     public void nextPage(FragmentsType fragmentsType, Bundle bundle) {
+        currentFragmentsType = fragmentsType;
         currentFragment = createFragment(fragmentsType);
         currentFragment.setArguments(bundle);
+        String backstackTag = fragmentControler.showChildFragment(currentFragment);
+        backstackIds.put(fragmentsType, backstackTag);
+    }
 
-        fragmentControler.showChildFragment(currentFragment );
+    @Override
+    public void setToolBar(ToolBarInfo toolbarInfo) {
+        LogUtil.d("test_tool_bar");
+        mToolBarControler.setToolbarInfo(toolbarInfo);
+        mToolBarControler.getToolbar().setOnMenuItemClickListener(itemClickListener);
+        mToolBarControler.getToolbar().setNavigationOnClickListener(navigationClick);
+    }
 
+    public void gobackPre(FragmentsType type) {
+        String preTag = backstackIds.get(type);
+        if (preTag == null) {
+            LogUtil.e("the tag is null");
+            return;
+        }
+        LogUtil.d("type = %s ,tag = %s",type.name(),preTag);
+        currentFragmentsType = type;
+        getSupportFragmentManager().popBackStackImmediate(preTag, 0);
     }
 
     private BaseFragment createFragment(FragmentsType fragmentsType) {
@@ -95,5 +86,35 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
             default:
                 return null;
         }
+    }
+
+    Toolbar.OnMenuItemClickListener itemClickListener = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            LogUtil.l("Click=" + item.getItemId());
+            return false;
+        }
+    };
+    View.OnClickListener navigationClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            LogUtil.l();
+            gobackPre(getPriviousTag(currentFragmentsType));
+        }
+    };
+
+    private FragmentsType getPriviousTag(FragmentsType type) {
+        FragmentsType fragmentsType = null;
+        switch (type) {
+            case MIAN_FRAGMENT:
+                break;
+            case PICTURE_FRAGMENT:
+                fragmentsType = FragmentsType.MIAN_FRAGMENT;
+                break;
+            case GALLERY_FRAGMENT:
+                fragmentsType = FragmentsType.PICTURE_FRAGMENT;
+                break;
+        }
+        return fragmentsType;
     }
 }

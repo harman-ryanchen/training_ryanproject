@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.util.LogUtil;
 
 /**
  * Created by ryan on 12/27/15.
@@ -15,7 +16,6 @@ public class ToolBarControler {
 
     private AppCompatActivity mContext;
     private Toolbar mToolbar;
-    private ToolBarInfo mToolbarInfo;
 
     public ToolBarControler(AppCompatActivity mContext, Toolbar mToolbar) {
         this.mContext = mContext;
@@ -23,46 +23,43 @@ public class ToolBarControler {
         mContext.setSupportActionBar(mToolbar);
     }
 
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
+
     /**
-     *
      * @param toolbarInfo
      */
     public void setToolbarInfo(ToolBarInfo toolbarInfo) {
-        this.mToolbarInfo = toolbarInfo;
 
-        solveActionBarAndToolBarConfilt();
+//        solveActionBarAndToolBarConfilt();
 
-        if (toolbarInfo.getTitleTextContent() !=null){
+        LogUtil.d("title = %s , LOGO = %s ,icon_color = %s , menu = %s", toolbarInfo.getTitleTextContent(), toolbarInfo.getToolbarLogo(), toolbarInfo.getNavigationIcon_color(), toolbarInfo.getMenu());
+        if (toolbarInfo.getTitleTextContent() != null) {
             mContext.getSupportActionBar().setDisplayShowTitleEnabled(false);
             mToolbar.setTitle(toolbarInfo.getTitleTextContent());
         }
-        if (toolbarInfo.getToolbarLogo() != 0){
+        if (toolbarInfo.getToolbarLogo() != 0) {
             mToolbar.setNavigationIcon(toolbarInfo.getToolbarLogo());
+
+        } else {
+            mToolbar.setNavigationIcon(null);
         }
-        if (toolbarInfo.getNavigationIcon_color() != 0){
-            mToolbar.setTitleTextColor(mToolbarInfo.getNavigationIcon_color());
+
+        if (toolbarInfo.getNavigationIcon_color() != 0) {
+            mToolbar.setTitleTextColor(toolbarInfo.getNavigationIcon_color());
+        }
+        if (toolbarInfo.getMenu() != 0) {
+            mToolbar.inflateMenu(toolbarInfo.getMenu());
+        } else {
+            mToolbar.getMenu().clear();
         }
     }
 
-    private void solveActionBarAndToolBarConfilt() {
+    public void solveActionBarAndToolBarConfilt() {
         mContext.getSupportActionBar().setDisplayShowTitleEnabled(false);
         mContext.getSupportActionBar().setDisplayUseLogoEnabled(false);
     }
 
-    /**
-     * @param item
-     * @return
-     */
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
-    }
-
-    /**
-     * @param menu
-     */
-    public boolean onCreateOptionsMenu(int customMenu,Menu menu) {
-        mContext.getMenuInflater().inflate(customMenu, menu);
-        return true;
-    }
 
 }

@@ -3,6 +3,7 @@ package com.example.ryan.weixindemo.header;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 /**
  * Created by ryan on 12/27/15.
@@ -11,6 +12,7 @@ public class ToolBarInfo {
     private String titleTextContent;
     private int toolbarLogo;
     private int mNavigationIcon_color;
+    private int menu = 0;
 
     public int getNavigationIcon_color() {
         return mNavigationIcon_color;
@@ -22,6 +24,10 @@ public class ToolBarInfo {
 
     public int getToolbarLogo() {
         return toolbarLogo;
+    }
+
+    public int getMenu() {
+        return menu;
     }
 
     public static class Builder {
@@ -45,6 +51,11 @@ public class ToolBarInfo {
             mToolBarInfo.mNavigationIcon_color = color;
             return this;
         }
+        public Builder setOptionMenu(int menu) {
+            mToolBarInfo.menu = menu;
+            return this;
+        }
+
 
 
 

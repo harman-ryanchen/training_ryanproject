@@ -7,6 +7,10 @@
     <string name="action_payment">Payment &#038; Receipt</string>
     <string name="action_help">Help &#038; Feedback</string>
 
+    <string name="title_child_pic">ChildPictureFragment</string>
+    <string name="title_child_gallery">ChildPictureGallery</string>
+
+
     <string name="tab_chat">Chats</string>
     <string name="tab_Contacts">Contacts</string>
     <string name="tab_Discover">Discover</string>
