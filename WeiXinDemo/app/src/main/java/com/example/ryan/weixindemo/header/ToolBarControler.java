@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.util.LogUtil;
@@ -16,11 +17,18 @@ public class ToolBarControler {
 
     private AppCompatActivity mContext;
     private Toolbar mToolbar;
+    private TextView toolBar_titletext;
 
     public ToolBarControler(AppCompatActivity mContext, Toolbar mToolbar) {
         this.mContext = mContext;
         this.mToolbar = mToolbar;
+        initToolbar();
+    }
+
+    private void initToolbar() {
         mContext.setSupportActionBar(mToolbar);
+        mContext.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolBar_titletext = (TextView) mToolbar.findViewById(R.id.toolbar_title);
     }
 
     public Toolbar getToolbar() {
@@ -36,8 +44,7 @@ public class ToolBarControler {
 
         LogUtil.d("title = %s , LOGO = %s ,icon_color = %s , menu = %s", toolbarInfo.getTitleTextContent(), toolbarInfo.getToolbarLogo(), toolbarInfo.getNavigationIcon_color(), toolbarInfo.getMenu());
         if (toolbarInfo.getTitleTextContent() != null) {
-            mContext.getSupportActionBar().setDisplayShowTitleEnabled(false);
-            mToolbar.setTitle(toolbarInfo.getTitleTextContent());
+            toolBar_titletext.setText(toolbarInfo.getTitleTextContent());
         }
         if (toolbarInfo.getToolbarLogo() != 0) {
             mToolbar.setNavigationIcon(toolbarInfo.getToolbarLogo());

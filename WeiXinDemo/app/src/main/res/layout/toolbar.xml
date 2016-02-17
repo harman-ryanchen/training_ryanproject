@@ -2,8 +2,18 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="@color/toobar_background"
-    android:popupTheme="@style/AppTheme.PopupOverlay">
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/actionBarSize"
+    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+    >
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Toolbar Title"
+        android:textColor="@android:color/white" />
 
 </android.support.v7.widget.Toolbar>
