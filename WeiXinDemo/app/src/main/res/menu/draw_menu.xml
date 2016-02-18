@@ -2,13 +2,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_first_fragment"
+            android:id="@+id/nav_first_section"
             android:title="First" />
         <item
-            android:id="@+id/nav_second_fragment"
+            android:id="@+id/nav_second_section"
             android:title="Second" />
         <item
-            android:id="@+id/nav_third_fragment"
+            android:id="@+id/nav_third_section"
             android:title="Third" />
     </group>
 

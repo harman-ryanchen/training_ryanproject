@@ -1,5 +1,6 @@
 package com.example.ryan.weixindemo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -16,6 +17,7 @@ import com.example.ryan.weixindemo.fragment.FragmentControler;
 import com.example.ryan.weixindemo.fragment.MainFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.BaseFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ChildPictureFragment;
+import com.example.ryan.weixindemo.fragment.tabfragment.FirstFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.GalleryFragment;
 import com.example.ryan.weixindemo.header.ToolBarControler;
 import com.example.ryan.weixindemo.header.ToolBarInfo;
@@ -80,11 +82,12 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
 
     private void selectNavigationItm(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_first_fragment:
+            case R.id.nav_first_section:
+                nextPage(FragmentsType.FRAGMENT_FIRST,null);
                 break;
-            case R.id.nav_second_fragment:
+            case R.id.nav_second_section:
                 break;
-            case R.id.nav_third_fragment:
+            case R.id.nav_third_section:
                 break;
         }
     }
@@ -133,6 +136,8 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
                 return new ChildPictureFragment();
             case GALLERY_FRAGMENT:
                 return new GalleryFragment();
+            case FRAGMENT_FIRST:
+                return new FirstFragment();
             default:
                 return null;
         }
