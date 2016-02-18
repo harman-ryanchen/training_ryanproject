@@ -28,6 +28,9 @@ public class ToolBarControler {
     private void initToolbar() {
         mContext.setSupportActionBar(mToolbar);
         mContext.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // enable ActionBar app icon to behave as action to toggle nav drawer
+        mContext.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mContext.getSupportActionBar().setHomeButtonEnabled(true);
         toolBar_titletext = (TextView) mToolbar.findViewById(R.id.toolbar_title);
     }
 

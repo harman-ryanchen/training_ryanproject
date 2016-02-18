@@ -1,9 +1,14 @@
 package com.example.ryan.weixindemo.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.FragmentsType;
@@ -24,6 +29,8 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
     private FragmentControler fragmentControler;
     private Map<FragmentsType, String> backstackIds = new HashMap();
     private FragmentsType currentFragmentsType;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView nvDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +38,54 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initToolBar();
+        initDrawerLaout();
         fragmentControler = new FragmentControler(getSupportFragmentManager(), R.id.sample_content_fragment);
         if (savedInstanceState == null) {
             String backsrackTag = fragmentControler.showMainFragment(createFragment(FragmentsType.MIAN_FRAGMENT));
             currentFragmentsType = FragmentsType.MIAN_FRAGMENT;
             backstackIds.put(FragmentsType.MIAN_FRAGMENT, backsrackTag);
+        }
+    }
+
+    private void initDrawerLaout() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        // Find our drawer view
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        // Setup drawer view
+        setupDrawerContent(nvDrawer);
+        // Inflate the header view at runtime
+        View headerLayout = nvDrawer.inflateHeaderView(R.layout.view_drawerlayout_head);
+        // We can now look up items within the header if needed
+        ImageView view_draw_onhead = (ImageView) headerLayout.findViewById(R.id.view_draw_onhead);
+        view_draw_onhead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LogUtil.l();
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                selectNavigationItm(item);
+                return true;
+            }
+        });
+    }
+
+    private void selectNavigationItm(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_first_fragment:
+                break;
+            case R.id.nav_second_fragment:
+                break;
+            case R.id.nav_third_fragment:
+                break;
         }
     }
 
@@ -70,7 +120,7 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
             LogUtil.e("the tag is null");
             return;
         }
-        LogUtil.d("type = %s ,tag = %s",type.name(),preTag);
+        LogUtil.d("type = %s ,tag = %s", type.name(), preTag);
         currentFragmentsType = type;
         getSupportFragmentManager().popBackStackImmediate(preTag, 0);
     }
@@ -99,7 +149,11 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
         @Override
         public void onClick(View view) {
             LogUtil.l();
-            gobackPre(getPriviousTag(currentFragmentsType));
+            if (currentFragmentsType == FragmentsType.MIAN_FRAGMENT) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            } else {
+                gobackPre(getPriviousTag(currentFragmentsType));
+            }
         }
     };
 
