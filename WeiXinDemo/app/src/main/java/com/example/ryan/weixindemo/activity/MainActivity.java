@@ -1,11 +1,11 @@
 package com.example.ryan.weixindemo.activity;
 
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +33,8 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
     private FragmentsType currentFragmentsType;
     private DrawerLayout mDrawerLayout;
     private NavigationView nvDrawer;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,11 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+        drawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, toolbar,R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.setDrawerListener(drawerToggle);
+
+
         // Inflate the header view at runtime
         View headerLayout = nvDrawer.inflateHeaderView(R.layout.view_drawerlayout_head);
         // We can now look up items within the header if needed
@@ -68,6 +75,29 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
             }
         });
 
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -83,7 +113,7 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
     private void selectNavigationItm(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_first_section:
-                nextPage(FragmentsType.FRAGMENT_FIRST,null);
+                nextPage(FragmentsType.FRAGMENT_FIRST, null);
                 break;
             case R.id.nav_second_section:
                 break;
@@ -94,7 +124,7 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
 
     private void initToolBar() {
         LogUtil.d("test_tool_bar");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolBarControler = new ToolBarControler(this, toolbar);
     }
 
@@ -154,11 +184,7 @@ public class MainActivity extends BaseActivity implements BaseFragment.Navigatio
         @Override
         public void onClick(View view) {
             LogUtil.l();
-            if (currentFragmentsType == FragmentsType.MIAN_FRAGMENT) {
-                mDrawerLayout.openDrawer(GravityCompat.START);
-            } else {
-                gobackPre(getPriviousTag(currentFragmentsType));
-            }
+            gobackPre(getPriviousTag(currentFragmentsType));
         }
     };
 

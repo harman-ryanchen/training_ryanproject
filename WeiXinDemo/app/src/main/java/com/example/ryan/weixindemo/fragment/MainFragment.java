@@ -106,7 +106,7 @@ public class MainFragment extends ExtraBaseFragment {
     public void initToolBar() {
         LogUtil.l();
         LogUtil.d("test_tool_bar");
-        getCallback().setToolBar(new ToolBarInfo.Builder().setToolBarContentText(getString(R.string.app_name)).setToolBarContentLogo(R.drawable.ic_drawer).setOptionMenu(R.menu.menu_main).build());
+        getCallback().setToolBar(new ToolBarInfo.Builder().setToolBarContentText(getString(R.string.app_name)).setOptionMenu(R.menu.menu_main).build());
     }
 
     @Override

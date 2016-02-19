@@ -2,7 +2,6 @@ package com.example.ryan.weixindemo.fragment.tabfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -16,18 +15,6 @@ import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.adapter.MultipleItemAdapter;
 import com.example.ryan.weixindemo.fragment.ExtraBaseFragment;
 
-
-/**
- * Author:    ZhuWenWu
- * Version    V1.0
- * Date:      2015/2/6  14:42.
- * Description:
- * Modification  History:
- * Date         	Author        		Version        	Description
- * -----------------------------------------------------------------------------------
- * 2015/2/6        ZhuWenWu            1.0                    1.0
- * Why & What is modified:
- */
 public class FirstFragment extends ExtraBaseFragment {
     public static final int TYPE_LINEAR_LAYOUT = 1;
     public static final int TYPE_GRID_LAYOUT = 2;
