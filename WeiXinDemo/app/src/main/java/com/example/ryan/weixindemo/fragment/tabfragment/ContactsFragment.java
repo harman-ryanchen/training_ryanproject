@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.adapter.ContactsAdapter;
 import com.example.ryan.weixindemo.infoobject.Contact;
-import com.example.ryan.weixindemo.util.DebugLog;
 import com.example.ryan.weixindemo.util.LogUtil;
 import com.example.ryan.weixindemo.view.IndexScroller;
 import com.example.ryan.weixindemo.view.ScrubberListView;
@@ -62,7 +61,7 @@ public class ContactsFragment extends BaseFragment implements LoaderManager.Load
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LogUtil.l();
-        View view = inflater.inflate(R.layout.contacts_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         contactsAdapter = new ContactsAdapter(getActivity());
         contactsAdapter.setInitData(contacts);
         listView = (ScrubberListView) view.findViewById(R.id.contacts_container);

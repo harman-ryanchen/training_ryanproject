@@ -1,5 +1,6 @@
 package com.example.ryan.weixindemo.fragment.tabfragment;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.AppConfig;
 import com.example.ryan.weixindemo.common.PostableHandler;
 import com.example.ryan.weixindemo.common.ThreadPoolManager;
+import com.example.ryan.weixindemo.fragment.DialogFragmentContainer;
 import com.example.ryan.weixindemo.util.LogUtil;
 
 import java.util.concurrent.ScheduledFuture;
@@ -22,21 +24,31 @@ import java.util.concurrent.TimeUnit;
  */
 public class DiscoverFragment extends BaseFragment implements View.OnClickListener {
     private TextView start_bt, stop_bt, schedule_tv, serial_start_bt, serial_stop_bt, serial_content;
+    private TextView dialog_normal_bt, dialog_progress_bt, dialog_sinnper_bt;
+    private DialogFragmentContainer dialog_fragmet;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.discover_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_discover, container, false);
         start_bt = (TextView) view.findViewById(R.id.start);
         stop_bt = (TextView) view.findViewById(R.id.stop);
         serial_start_bt = (TextView) view.findViewById(R.id.start_serial);
         serial_stop_bt = (TextView) view.findViewById(R.id.stop_serial);
         serial_content = (TextView) view.findViewById(R.id.serial_content);
         schedule_tv = (TextView) view.findViewById(R.id.schedule_content);
+
+        dialog_normal_bt = (TextView) view.findViewById(R.id.dialog_normal_bt);
+        dialog_progress_bt = (TextView) view.findViewById(R.id.dialog_progress_bt);
+        dialog_sinnper_bt = (TextView) view.findViewById(R.id.dialog_sinnper_bt);
         start_bt.setOnClickListener(this);
         stop_bt.setOnClickListener(this);
         serial_start_bt.setOnClickListener(this);
         serial_stop_bt.setOnClickListener(this);
+
+        dialog_normal_bt.setOnClickListener(this);
+        dialog_progress_bt.setOnClickListener(this);
+        dialog_sinnper_bt.setOnClickListener(this);
         return view;
     }
 
@@ -62,11 +74,19 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
                 running = false;
                 ThreadPoolManager.clearSerialThread(AppConfig.SERIAL_THREAD);
                 break;
+            case R.id.dialog_normal_bt:
+                break;
+            case R.id.dialog_progress_bt:
+                showCostmerDialogFragmeny("nothing");
+                break;
+            case R.id.dialog_sinnper_bt:
+                break;
         }
     }
 
     private int serial_count = 0;
     private boolean running = false;
+
     /**
      * HandlerThread适合在只需要在一个工作线程(非UI线程)+任务的等待队列的形式,优点是不会有堵塞，减少了对性能的消耗，缺点是不能同时进行多任务的处理,需要等待进行处理。处理效率较低。
      * 它继承Thread 但是与Thread 的区别在于多了一个Looper来保持任务队列。
@@ -77,7 +97,7 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void run() {
                 try {
-                    if (!running)return;
+                    if (!running) return;
                     Thread.sleep(2000);
                     serial_count++;
                     PostableHandler.UI_THREAD.postImmediately(new Runnable() {
@@ -94,6 +114,20 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         });
 
     }
+
+    private void showCostmerDialogFragmeny(String msg) {
+        FragmentManager fm = getActivity().getFragmentManager();
+        dialog_fragmet = (DialogFragmentContainer) fm.findFragmentByTag(getClass().getName() + AppConfig.DIALOG_TAG);
+        if (dialog_fragmet == null) {
+            dialog_fragmet = DialogFragmentContainer.newInstance(DialogFragmentContainer.DialogType.DAILOG_PROGRESS);
+        }
+        if (!dialog_fragmet.isVisible()) {
+            dialog_fragmet.show(fm.beginTransaction(), getClass().getName() + AppConfig.DIALOG_TAG);
+        }
+        dialog_fragmet.setDialogMsg(msg);
+
+    }
+
 
     int count = 0;
     ScheduledFuture<?> beeperHandle;
@@ -114,6 +148,7 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
                     public void run() {
                         LogUtil.l("the thread name is ", Thread.currentThread().getName() + ",count=" + count);
                         schedule_tv.setText("the count is " + count);
+
                     }
                 });
             }

@@ -99,7 +99,7 @@ public class MainFragment extends ExtraBaseFragment {
                              Bundle savedInstanceState) {
         LogUtil.l();
         super.onCreateView(inflater,container,savedInstanceState);
-        return inflater.inflate(R.layout.slide_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
     @Override

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/actionBarSize"
     android:popupTheme="@android:style/ThemeOverlay.Material.Light"
-    android:theme="@style/ToolbarTheme"
+    android:theme="@style/toolbartheme"
     android:fitsSystemWindows="true"
 
     >

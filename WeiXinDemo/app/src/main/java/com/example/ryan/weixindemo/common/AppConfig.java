@@ -10,5 +10,7 @@ public class AppConfig {
     public static String SMALL_IMAGE_TAG = "SMALL_IMAGE_TAG";
     public static String LARGE_IMAGE_TAG = "LARGE_IMAGE_TAG";
     public static String SERIAL_THREAD = "SERIAL_THREAD";
-//    public static String[] CONTACTS = new String[]{"gwegew","gwgegsd","qwrwqfe","odsogsd","lsgds","zadsaf","vdsbsd","mgewhgwe","afsdgds","sdgdsb","hfeh","ufwegew","fsaga","qfqwr","xvxv","nbngfn","vdbr","wfwqetewt","iuyluyoyu","ouyouy","lpuytjrt","dqwrewt","dfbsdgsd","hfdgsd","jfgjdgj","fdsadas","rewtewtew","tetewtwe","mghmgf","ndfhhwr","nefhrw","fqwff","gsdgag","safasfa","wqewqrwq","gdsgewger","rewteryre","ytrtrh","hdfbdfbdf",};
+    public static String DIALOG_TAG = "_DIALOG_TAG";
+
+
 }

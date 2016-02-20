@@ -47,7 +47,7 @@ public class ChatsListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         DebugLog.d("");
-        View view = inflater.inflate(R.layout.chats_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_chats, container, false);
         this.mContext = getActivity();
         mGridView = (GridView) view.findViewById(R.id.photoe_wall);
         getFloderImage();

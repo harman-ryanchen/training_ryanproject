@@ -43,7 +43,7 @@ public class ChildPictureFragment extends ExtraBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
         DebugLog.d("");
-        View view = inflater.inflate(R.layout.child_picture_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_child_picture, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.child_pic_container);
         mBeanList = (List<String>) getArguments().getSerializable(ArgumentKeys.IMAGE_URILS.name());
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));//这里用线性宫格显示 类似于grid view

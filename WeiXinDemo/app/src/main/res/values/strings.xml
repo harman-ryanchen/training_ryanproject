@@ -19,4 +19,8 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
+
+    <string name="dialog_normal_message">this is message in normal dialog</string>
+    <string name="dialog_counter_message">this is message in counter dialog,the count is %s</string>
+
 </resources>

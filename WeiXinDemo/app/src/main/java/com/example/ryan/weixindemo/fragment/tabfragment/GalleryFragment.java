@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
@@ -31,7 +30,7 @@ public class GalleryFragment extends ExtraBaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LogUtil.l();
         super.onCreateView(inflater,container,savedInstanceState);
-        View view = inflater.inflate(R.layout.gallery_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_gallery, container, false);
         viewPager = (ViewPager) view.findViewById(R.id.gallery_container);
         picPaths = (List<String>) getArguments().getSerializable(ArgumentKeys.IMAGE_URILS.name());
         int position = getArguments().getInt(ArgumentKeys.CURRENT_IMAGE.name());
