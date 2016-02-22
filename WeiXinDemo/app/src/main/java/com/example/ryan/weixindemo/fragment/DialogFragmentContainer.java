@@ -11,25 +11,23 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.infoobject.DialogFragmentInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
+
 
 /**
  * Created by ryan on 2/20/16.
  */
-public class DialogFragmentContainer extends DialogFragment {
+public class DialogFragmentContainer extends DialogFragment implements View.OnClickListener {
     public static String DIALOG_TYPE = "DIALOG_TYPE";
-    private TextView mDialog_msg;
+    private TextView okTv, cancelTv,msgText_tv,titleText_tv;
 
-    public static enum DialogType {
-        DIALOG_NORMAL,
-        DAILOG_COUNT,
-        DAILOG_PROGRESS;
-    }
 
-    public static DialogFragmentContainer newInstance(DialogFragmentContainer.DialogType dialogType) {
+
+    public static DialogFragmentContainer newInstance(DialogFragmentInfo info) {
         DialogFragmentContainer frag = new DialogFragmentContainer();
         Bundle args = new Bundle();
-        args.putString(DIALOG_TYPE, dialogType.name());
+        args.putSerializable(DIALOG_TYPE,info);
         frag.setArguments(args);
         return frag;
     }
@@ -38,15 +36,13 @@ public class DialogFragmentContainer extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        String type = (String) getArguments().get(DIALOG_TYPE);
-        if (type == null) return null;
-        View view = null;
-        if (type.equals(DialogType.DIALOG_NORMAL.name())) {
-            view = inflater.inflate(R.layout.view_dialog_normal, null);
-        } else if (type.equals(DialogType.DAILOG_COUNT.name())) {
-            view = inflater.inflate(R.layout.view_dialog_counter, null);
-        } else if (type.equals(DialogType.DAILOG_PROGRESS.name())) {
-            view = inflater.inflate(R.layout.view_dialog_progress, null);
+        DialogFragmentInfo info = (DialogFragmentInfo) getArguments().get(DIALOG_TYPE);
+        if (info == null) return null;
+        View view =null;
+        if (info.getCustomContainer()==null){
+            view = inflater.inflate(R.layout.view_dialog_normal,null);
+        }else{
+            view = info.getCustomContainer();
         }
         return view;
     }
@@ -63,12 +59,22 @@ public class DialogFragmentContainer extends DialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDialog_msg = (TextView) view.findViewById(R.id.dialog_msg);
+        msgText_tv = (TextView) view.findViewById(R.id.dialog_msg);
+        okTv = (TextView) view.findViewById(R.id.ok_tv);
+        cancelTv = (TextView) view.findViewById(R.id.cancel_tv);
+        titleText_tv = (TextView) view.findViewById(R.id.title);
+        msgText_tv = (TextView) view.findViewById(R.id.dialog_msg);
+
+        if (okTv!=null){
+            okTv.setOnClickListener(this);
+        } if (okTv!=cancelTv){
+            okTv.setOnClickListener(this);
+        }
     }
 
     public void setDialogMsg(String msg) {
-        if (mDialog_msg != null) {
-            mDialog_msg.setText(msg);
+        if (msgText_tv != null) {
+            msgText_tv.setText(msg);
         }
     }
 
@@ -94,5 +100,16 @@ public class DialogFragmentContainer extends DialogFragment {
     public void onPause() {
         super.onPause();
         LogUtil.l();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ok_tv:
+                break;
+            case R.id.cancel_tv:
+                dismiss();
+                break;
+        }
     }
 }

@@ -33,7 +33,7 @@ import com.example.ryan.weixindemo.fragment.tabfragment.ChatsListFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.ContactsFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.DiscoverFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.MeFragment;
-import com.example.ryan.weixindemo.header.ToolBarInfo;
+import com.example.ryan.weixindemo.infoobject.ToolBarInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
 import com.example.ryan.weixindemo.view.SlidingTabLayout;
 

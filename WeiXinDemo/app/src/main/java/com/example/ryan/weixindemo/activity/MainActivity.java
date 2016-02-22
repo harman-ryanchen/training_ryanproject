@@ -20,7 +20,7 @@ import com.example.ryan.weixindemo.fragment.tabfragment.ChildPictureFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.FirstFragment;
 import com.example.ryan.weixindemo.fragment.tabfragment.GalleryFragment;
 import com.example.ryan.weixindemo.header.ToolBarControler;
-import com.example.ryan.weixindemo.header.ToolBarInfo;
+import com.example.ryan.weixindemo.infoobject.ToolBarInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
 
 import java.util.HashMap;

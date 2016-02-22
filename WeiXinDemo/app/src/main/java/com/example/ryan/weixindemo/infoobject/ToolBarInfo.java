@@ -1,9 +1,4 @@
-package com.example.ryan.weixindemo.header;
-
-import android.content.Context;
-import android.support.annotation.StringRes;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+package com.example.ryan.weixindemo.infoobject;
 
 /**
  * Created by ryan on 12/27/15.

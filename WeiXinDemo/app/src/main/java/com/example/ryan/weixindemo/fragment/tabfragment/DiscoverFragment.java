@@ -1,6 +1,8 @@
 package com.example.ryan.weixindemo.fragment.tabfragment;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import com.example.ryan.weixindemo.common.AppConfig;
 import com.example.ryan.weixindemo.common.PostableHandler;
 import com.example.ryan.weixindemo.common.ThreadPoolManager;
 import com.example.ryan.weixindemo.fragment.DialogFragmentContainer;
+import com.example.ryan.weixindemo.infoobject.DialogFragmentInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
 
 import java.util.concurrent.ScheduledFuture;
@@ -25,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 public class DiscoverFragment extends BaseFragment implements View.OnClickListener {
     private TextView start_bt, stop_bt, schedule_tv, serial_start_bt, serial_stop_bt, serial_content;
     private TextView dialog_normal_bt, dialog_progress_bt, dialog_sinnper_bt;
-    private DialogFragmentContainer dialog_fragmet;
 
     @Nullable
     @Override
@@ -75,12 +77,23 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
                 ThreadPoolManager.clearSerialThread(AppConfig.SERIAL_THREAD);
                 break;
             case R.id.dialog_normal_bt:
+                buildProgressDialogFragment(DialogFragmentInfo.DialogType.DIALOG_NORMAL);
                 break;
             case R.id.dialog_progress_bt:
-                showCostmerDialogFragmeny("nothing");
+                buildProgressDialogFragment(DialogFragmentInfo.DialogType.DAILOG_PROGRESS);
                 break;
             case R.id.dialog_sinnper_bt:
                 break;
+        }
+    }
+
+    private void buildProgressDialogFragment(DialogFragmentInfo.DialogType type) {
+        if (type == DialogFragmentInfo.DialogType.DIALOG_NORMAL) {
+            View v = LayoutInflater.from(getActivity()).inflate(R.layout.view_dialog_normal, null);
+            showCostmerDialogFragmeny(new DialogFragmentInfo.Builder().setConstomContianer(v).setTitleText(getString(R.string.dialog_normal_message)).build());
+        } else if (type == DialogFragmentInfo.DialogType.DAILOG_PROGRESS) {
+            View v = LayoutInflater.from(getActivity()).inflate(R.layout.view_dialog_progress, null);
+            showCostmerDialogFragmeny(new DialogFragmentInfo.Builder().setConstomContianer(v).setTitleText(getString(R.string.dialog_progress_message)).build());
         }
     }
 
@@ -115,16 +128,17 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-    private void showCostmerDialogFragmeny(String msg) {
+    private void showCostmerDialogFragmeny(DialogFragmentInfo info) {
         FragmentManager fm = getActivity().getFragmentManager();
-        dialog_fragmet = (DialogFragmentContainer) fm.findFragmentByTag(getClass().getName() + AppConfig.DIALOG_TAG);
-        if (dialog_fragmet == null) {
-            dialog_fragmet = DialogFragmentContainer.newInstance(DialogFragmentContainer.DialogType.DAILOG_PROGRESS);
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment fragment = (DialogFragmentContainer) fm.findFragmentByTag(getClass().getName() + AppConfig.DIALOG_TAG);
+        if (fragment != null) {
+            ft.remove(fragment);
         }
-        if (!dialog_fragmet.isVisible()) {
-            dialog_fragmet.show(fm.beginTransaction(), getClass().getName() + AppConfig.DIALOG_TAG);
-        }
-        dialog_fragmet.setDialogMsg(msg);
+        ft.addToBackStack(null);
+        DialogFragmentContainer dialog_fragmet = DialogFragmentContainer.newInstance(info);
+        dialog_fragmet.show(ft, getClass().getName() + AppConfig.DIALOG_TAG);
+
 
     }
 

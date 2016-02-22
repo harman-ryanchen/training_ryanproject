@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.example.ryan.weixindemo.R;
 import com.example.ryan.weixindemo.common.ArgumentKeys;
 import com.example.ryan.weixindemo.fragment.ExtraBaseFragment;
-import com.example.ryan.weixindemo.header.ToolBarInfo;
+import com.example.ryan.weixindemo.infoobject.ToolBarInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
 
 import java.util.List;

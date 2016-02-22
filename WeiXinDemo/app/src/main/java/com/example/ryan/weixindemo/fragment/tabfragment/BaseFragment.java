@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.example.ryan.weixindemo.common.FragmentsType;
-import com.example.ryan.weixindemo.header.ToolBarInfo;
+import com.example.ryan.weixindemo.infoobject.ToolBarInfo;
 
 /**
  * Created by ryan on 12/30/15.

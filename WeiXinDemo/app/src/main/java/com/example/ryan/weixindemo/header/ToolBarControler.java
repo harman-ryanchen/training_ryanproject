@@ -1,13 +1,11 @@
 package com.example.ryan.weixindemo.header;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.ryan.weixindemo.R;
+import com.example.ryan.weixindemo.infoobject.ToolBarInfo;
 import com.example.ryan.weixindemo.util.LogUtil;
 
 /**

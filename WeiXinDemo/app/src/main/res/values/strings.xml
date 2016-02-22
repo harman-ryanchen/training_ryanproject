@@ -21,6 +21,12 @@
 
 
     <string name="dialog_normal_message">this is message in normal dialog</string>
+    <string name="dialog_progress_message">this is message in progress dialog</string>
+    <string name="dialog_normal_title">Title</string>
     <string name="dialog_counter_message">this is message in counter dialog,the count is %s</string>
+
+
+    <string name="button_str_ok">OK</string>
+    <string name="button_str_cancel">CANCEL</string>
 
 </resources>
