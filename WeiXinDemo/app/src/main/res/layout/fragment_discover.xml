@@ -19,7 +19,7 @@
 
         <TextView
             android:id="@+id/start"
-            style="@style/button_text"
+            style="@style/button_text_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/stop"
-            style="@style/button_text"
+            style="@style/button_text_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/start_serial"
-            style="@style/button_text"
+            style="@style/button_text_ridial"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -61,7 +61,7 @@
 
         <TextView
             android:id="@+id/stop_serial"
-            style="@style/button_text"
+            style="@style/button_text_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -88,7 +88,7 @@
 
         <TextView
             android:id="@+id/dialog_normal_bt"
-            style="@style/button_text"
+            style="@style/button_text_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -97,7 +97,7 @@
 
         <TextView
             android:id="@+id/dialog_progress_bt"
-            style="@style/button_text"
+            style="@style/button_text_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -106,7 +106,7 @@
 
         <TextView
             android:id="@+id/dialog_sinnper_bt"
-            style="@style/button_text"
+            style="@style/button_text_blue_gradient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

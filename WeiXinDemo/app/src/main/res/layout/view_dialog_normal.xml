@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/button_str_ok"
-            style="@style/button_text"
+            style="@style/button_text_green"
             />
         <TextView
             android:id="@+id/cancel_tv"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/button_str_cancel"
-            style="@style/button_text"
+            style="@style/button_text_green"
             />
 
     </LinearLayout>
