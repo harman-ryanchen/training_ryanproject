@@ -25,7 +25,7 @@ import com.example.ryan.weixindemo.R;
 public class MultipleItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public enum ITEM_TYPE {
         ITEM_TYPE_IMAGE,
-        ITEM_TYPE_TEXT
+        ITEM_TYPE_TEXT;
     }
 
     private final LayoutInflater mLayoutInflater;
