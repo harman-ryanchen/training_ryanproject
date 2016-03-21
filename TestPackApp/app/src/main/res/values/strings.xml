@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TestPackApp</string>
+    <string name="app_name_release">TestPackAppRelease</string>
+    <string name="app_name_debug">TestPackAppDebug</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

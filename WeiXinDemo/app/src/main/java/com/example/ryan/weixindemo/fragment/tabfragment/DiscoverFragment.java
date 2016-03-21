@@ -167,4 +167,5 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
             }
         }, 0, 2, TimeUnit.SECONDS);
     }
+
 }
