@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         TextView test_discriable = (TextView) findViewById(R.id.test_discriable);
-        test_discriable.setText("the link is ="+ BuildConfig.CONFIG_URL+"the fake data is open ="+BuildConfig.OPEN_FAKE_DATA);
+        test_discriable.setText("the links is ="+ BuildConfig.CONFIG_URL+"the fake data is open ="+BuildConfig.OPEN_FAKE_DATA);
     }
 
     private String getChannel(Context context) {
