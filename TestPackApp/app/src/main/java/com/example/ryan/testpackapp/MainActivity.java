@@ -2,12 +2,10 @@ package com.example.ryan.testpackapp;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import OopPrinciples.HumanMrg;
+import OopPrinciples.Women;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,16 +49,28 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView test_content = (TextView) findViewById(R.id.test_content);
-        try {
-            PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
-            test_content.setText("versionName = "+pi.versionName+",the apk channel =" + getChannel(this)+",the build type is = "+ getBuileTyle(this));
-            Log.d("TEST_PACK", "name = " + pi.versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        test_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HumanMrg.getInstance().chiFan(new Women());
+            }
+        });
+//        try {
+//            PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+//            test_content.setText("versionName = "+pi.versionName+",the apk channel =" + getChannel(this)+",the build type is = "+ getBuileTyle(this));
+//            Log.d("TEST_PACK", "name = " + pi.versionName);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         TextView test_discriable = (TextView) findViewById(R.id.test_discriable);
-        test_discriable.setText("the links is ="+ BuildConfig.CONFIG_URL+"the fake data is open ="+BuildConfig.OPEN_FAKE_DATA);
+//        test_discriable.setText("the links is ="+ BuildConfig.CONFIG_URL+"the fake data is open ="+BuildConfig.OPEN_FAKE_DATA);
+        test_discriable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HumanMrg.getInstance().jianShen(new Women());
+            }
+        });
     }
 
     private String getChannel(Context context) {

@@ -17,11 +17,15 @@
         android:id="@+id/test_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="men chi fan"
+        android:padding="5dp"
+        />
 
     <TextView
         android:id="@+id/test_discriable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="men jian shen"
+        android:padding="5dp"
+        />
 </LinearLayout>
