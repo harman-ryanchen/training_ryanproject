@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 import OopPrinciples.HumanMrg;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         TextView test_content = (TextView) findViewById(R.id.test_content);
+
         test_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
