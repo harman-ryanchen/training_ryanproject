@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">HKGankio</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--daily -->
+    <string name="argument_url_id">argument_url_id</string>
+    <string name="argument_item_id">argument_item_id</string>
+</resources>
