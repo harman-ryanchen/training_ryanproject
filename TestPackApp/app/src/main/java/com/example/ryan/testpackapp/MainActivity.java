@@ -1,6 +1,7 @@
 package com.example.ryan.testpackapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import OopPrinciples.HumanMrg;
 import OopPrinciples.Women;
+import designPatern.XiJinPing;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(this,TestLeakCanaryActivity.class));
 
         } else if (id == R.id.nav_slideshow) {
 
