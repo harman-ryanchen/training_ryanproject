@@ -14,20 +14,20 @@ import retrofit2.http.Path;
 public interface DailyApiService {
 
     //http://news-at.zhihu.com/api/4/start-image/1080*1776
-    @GET("/start-image/{size}")
+    @GET("/api/4/start-image/{size}")
     Call<StartImageBean> getStartImage(@Path("size") String size);
 
     //http://news-at.zhihu.com/api/4/news/latest
-    @GET("/news/latest")
+    @GET("/api/4/news/latest")
     Call<DailyNewsBean> getLatestNews();
 
     //http://news-at.zhihu.com/api/3/news/hot
-    @GET("/3/news/hot")
+    @GET("/api/3/news/hot")
     Call<DailyNewsBean> getHotNews();
 
 
     //http://news.at.zhihu.com/api/4/news/before/20131119
-    @GET("/before/{date}")
+    @GET("/api/4/news/before/{date}")
     Call<DailyNewsBean> getBeforeNews(@Path("beforedate") String beforedate );
 
 

@@ -26,7 +26,7 @@ public class DailyNavigationFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        parentView = inflater.inflate(R.layout.layout_top_navigation,null);
+        parentView = View.inflate(getContext(), R.layout.layout_top_navigation,null);
         viewPager = (ViewPager) parentView.findViewById(R.id.inner_viewpager);
         smartTabLayout = (SmartTabLayout) parentView.findViewById(R.id.viewpagertab);
         smartTabLayout.setVisibility(View.VISIBLE);
@@ -39,13 +39,25 @@ public class DailyNavigationFragment extends Fragment{
         pagerAdapter = new PagerAdapter(getChildFragmentManager(), HKCommon.dailyItems) {
             @Override
             public Fragment getItem(int position) {
-                DailyNewsFragment fragment = new DailyNewsFragment();
+                String item = HKCommon.dailyItems[position];
+                DailyBaseListFragment fragment = crateDailyFragment(item);
                 Bundle bundle = new Bundle();
-                bundle.putString(getString(R.string.argument_item_id),HKCommon.dailyItems[position]);
+                bundle.putString(getString(R.string.argument_item_id),item);
                 fragment.setArguments(bundle);
                 return fragment;
             }
         };
         return pagerAdapter;
+    }
+    private DailyBaseListFragment crateDailyFragment(String item){
+        DailyBaseListFragment fragment = null;
+        if (item.equals("Dayily")){
+            fragment = new DailyNewsFragment();
+        }else if (item.equals("Hot")){
+            fragment = new DailyHotsFragment();
+        }else{
+            fragment = new DailyHotsFragment();
+        }
+        return fragment;
     }
 }

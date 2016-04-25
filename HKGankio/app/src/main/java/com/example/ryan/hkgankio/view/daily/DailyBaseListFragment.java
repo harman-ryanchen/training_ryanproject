@@ -30,13 +30,14 @@ public abstract class DailyBaseListFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_daily,null);
+        mRootView = inflater.inflate(R.layout.fragment_daily, container, false);
         progressBar = (ProgressBar) mRootView.findViewById(R.id.progressbar);
         showProgressBar();
         getArg();
         dailyPresenter = createPresenter();
         loadData();
         recyclerView = (RecyclerView) mRootView.findViewById(R.id.recyclerView);
+
         mLayoutManager = new LinearLayoutManager(HKApplication.AppContext);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(mLayoutManager);

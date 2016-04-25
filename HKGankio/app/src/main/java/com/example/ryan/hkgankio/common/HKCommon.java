@@ -7,5 +7,5 @@ public class HKCommon {
 
 
     public static String daily_base_api = "http://news-at.zhihu.com";
-    public static String[] dailyItems = new String[]{"日报,最热,热点"};
+    public static String[] dailyItems = new String[]{"Dayily","Hot","Sport"};
 }

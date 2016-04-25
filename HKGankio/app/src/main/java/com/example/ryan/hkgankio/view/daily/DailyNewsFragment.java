@@ -44,6 +44,7 @@ public class DailyNewsFragment extends DailyBaseListFragment implements IBaseDai
     @Override
     public void onLoadDataResult(DailyNewsBean newsBean) {
         hideProgressBar();
+        if (newsBean==null)return;
         this.storiesBeens = newsBean.getStories();
         this.topStoriesBeen = newsBean.getTop_stories();
         adapter = bindAdapter();

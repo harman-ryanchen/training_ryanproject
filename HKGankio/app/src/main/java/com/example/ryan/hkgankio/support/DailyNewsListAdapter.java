@@ -12,6 +12,7 @@ import com.example.ryan.hkgankio.bean.StoriesBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by studio02 on 4/25/16.
@@ -26,12 +27,12 @@ public class DailyNewsListAdapter extends BaseDailyListAdapter<StoriesBean, Dail
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View item_layout = LayoutInflater.from(mContext).inflate(R.layout.item_daily_news_adapter, null);
+        View item_layout = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_daily_news_adapter, parent, false);
         ViewHolder vh = new ViewHolder(item_layout);
         vh.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
         return vh;
@@ -52,7 +53,7 @@ public class DailyNewsListAdapter extends BaseDailyListAdapter<StoriesBean, Dail
             super(itemView);
             parentView = itemView;
             news_content = (TextView) itemView.findViewById(R.id.news_content);
-            news_image = (SimpleDraweeView) itemView.findViewById(R.id.news_image);
+//            news_image = (SimpleDraweeView) itemView.findViewById(R.id.news_image);
 
         }
     }
