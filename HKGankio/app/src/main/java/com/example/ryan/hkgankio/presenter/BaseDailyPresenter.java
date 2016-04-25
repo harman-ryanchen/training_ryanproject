@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface BaseDailyPresenter {
 
-    DailyNewsBean loadDailyData();
+    void loadDailyData(String item);
 }

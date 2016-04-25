@@ -5,6 +5,7 @@ package com.example.ryan.hkgankio.common;
  */
 public class HKCommon {
 
-    public static String[] dailyItems = new String[]{"日报,新闻,热点"};
-    public static String[] dailyurls = new String[]{"http://news-at.zhihu.com/api/4,http://news-at.zhihu.com/api/4,http://news-at.zhihu.com/api/4"};
+
+    public static String daily_base_api = "http://news-at.zhihu.com";
+    public static String[] dailyItems = new String[]{"日报,最热,热点"};
 }

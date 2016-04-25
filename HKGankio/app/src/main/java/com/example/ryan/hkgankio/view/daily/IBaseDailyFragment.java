@@ -1,10 +1,7 @@
 package com.example.ryan.hkgankio.view.daily;
 
-import android.content.Context;
-import android.os.Bundle;
-
+import com.example.ryan.hkgankio.bean.DailyNewsBean;
 import com.example.ryan.hkgankio.bean.StoriesBean;
-import com.example.ryan.hkgankio.view.IBaseFragment;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ public interface IBaseDailyFragment extends IBaseFragment{
 
     /**
      * get data result after it query
-     * @param storiesBeens
+     * @param
      */
-    void onLoadDataResult(List<StoriesBean> storiesBeens);
+    void onLoadDataResult(DailyNewsBean newsBean);
 }

@@ -28,9 +28,9 @@ public class HttpMrg {
                 .build();
         return retrofit.create(clazz);
     }
-    public DailyApiService getDailyApi() {
-        return initRetrofit(BaseApi.daily_news_api,DailyApiService.class);
-    }
+//    public DailyApiService getDailyApi() {
+//        return initRetrofit(BaseApi.daily_news_api,DailyApiService.class);
+//    }
 
 
 }
